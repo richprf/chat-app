@@ -16,13 +16,14 @@ export class ChatGateway implements OnGatewayConnection {
   handleConnection(client: WebSocket) {
     // وقتی این کلاینت یک پیام متنی فرستاد...
     client.on('message', (raw) => {
-      const text = raw.toString();
+      // فرانت یک JSON می‌فرستد (نام + متن + ساعت)؛ سرور آن را باز نمی‌کند
+      const payload = raw.toString();
 
-      // همان متن را برای همه‌ی کلاینت‌های متصل می‌فرستیم (broadcast)
+      // همان رشته را برای همه‌ی کلاینت‌های متصل می‌فرستیم (broadcast)
       // پیام جایی ذخیره نمی‌شود؛ فقط همین لحظه پخش می‌شود
       this.server.clients.forEach((other) => {
         if (other.readyState === WebSocket.OPEN) {
-          other.send(text);
+          other.send(payload);
         }
       });
     });
