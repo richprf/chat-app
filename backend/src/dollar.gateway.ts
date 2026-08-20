@@ -6,12 +6,15 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-function mockPrice() {
-  // قیمت ساختگی حدود ۵۸ هزار تومان؛ هر بار کمی بالا و پایین می‌شود
-  return 58000 + Math.floor(Math.random() * 1000);
+// قیمت دلار آزاد را از JSON عمومی TGJU می‌خوانیم (بدون API key)
+async function fetchDollarToman() {
+  const res = await fetch('https://call5.tgju.org/ajax.json');
+  const data = await res.json();
+  // p به ریال است؛ تقسیم بر ۱۰ می‌شود تومان
+  const rial = Number(String(data.current.price_dollar_rl.p).replace(/,/g, ''));
+  return Math.round(rial / 10);
 }
 
-// namespace جدا تا با چت قاطی نشود
 @WebSocketGateway({
   namespace: '/dollar',
   cors: { origin: 'http://localhost:3000' },
@@ -21,14 +24,24 @@ export class DollarGateway implements OnGatewayInit, OnGatewayConnection {
   server: Server;
 
   afterInit() {
-    // هر ۳ ثانیه قیمت را برای همه کلاینت‌های وصل‌شده می‌فرستیم
-    setInterval(() => {
-      this.server.emit('price', mockPrice());
-    }, 3000);
+    // هر ۵ ثانیه قیمت واقعی را می‌گیریم و برای همه کلاینت‌ها می‌فرستیم
+    setInterval(async () => {
+      try {
+        const price = await fetchDollarToman();
+        this.server.emit('price', price);
+      } catch (err) {
+        console.error('خواندن قیمت دلار ناموفق بود', err);
+      }
+    }, 5000);
   }
 
-  handleConnection(client: Socket) {
-    // به محض وصل شدن، یک قیمت بفرست تا صفحه خالی نماند
-    client.emit('price', mockPrice());
+  async handleConnection(client: Socket) {
+    try {
+      // به محض وصل شدن، آخرین قیمت واقعی را بفرست
+      const price = await fetchDollarToman();
+      client.emit('price', price);
+    } catch (err) {
+      console.error('خواندن قیمت دلار ناموفق بود', err);
+    }
   }
 }

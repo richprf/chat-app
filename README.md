@@ -38,4 +38,4 @@ npm run dev
 
 ## قیمت لحظه‌ای دلار
 
-صفحه [http://localhost:3000/dollar](http://localhost:3000/dollar) با WebSocket به `http://localhost:3001/dollar` وصل می‌شود و هر چند ثانیه یک قیمت ساختگی می‌گیرد. API واقعی نیست؛ فقط برای یادگیری داده زنده است.
+صفحه [http://localhost:3000/dollar](http://localhost:3000/dollar) با WebSocket به بک‌اند وصل می‌شود. بک‌اند قیمت دلار آزاد را از `https://call5.tgju.org/ajax.json` می‌خواند و همان عدد را برای فرانت می‌فرستد.

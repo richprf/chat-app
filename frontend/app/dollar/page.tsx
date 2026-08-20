@@ -7,7 +7,7 @@ export default function DollarPage() {
   const [price, setPrice] = useState<number | null>(null);
 
   useEffect(() => {
-    // وصل شدن به Gateway قیمت دلار روی بک‌اند
+    // وصل شدن به Gateway بک‌اند؛ قیمت واقعی دلار از آنجا می‌آید
     const socket = io('http://localhost:3001/dollar');
 
     // هر بار سرور قیمت جدید فرستاد، عدد روی صفحه عوض می‌شود
