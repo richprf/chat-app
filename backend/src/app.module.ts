@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ChatGateway } from './chat.gateway';
+import { DollarGateway } from './dollar.gateway';
 
 @Module({
-  // ChatGateway را اینجا ثبت می‌کنیم تا Nest آن را راه بیندازد
-  providers: [ChatGateway],
+  providers: [ChatGateway, DollarGateway],
 })
 export class AppModule {}
