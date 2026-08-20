@@ -105,7 +105,7 @@ export class ChatGateway implements OnGatewayDisconnect {
   private async sendUsers(room: string) {
     const sockets = await this.server.in(room).fetchSockets();
     const users = sockets
-      .map((socket) => socket.data.username)
+      .map((socket:any) => socket.data.username)
       .filter(Boolean);
     this.server.to(room).emit('users', users);
   }
