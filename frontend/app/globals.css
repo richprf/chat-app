@@ -1,1 +1,5 @@
-@import "tailwindcss";
+@import "tailwindcss" source("../");
+
+@theme inline {
+  --font-sans: var(--font-vazirmatn), ui-sans-serif, system-ui, sans-serif;
+}
