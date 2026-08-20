@@ -37,7 +37,7 @@ export class ChatGateway implements OnGatewayDisconnect {
     // نام و اتاق را روی خود سوکت نگه می‌داریم (نه در دیتابیس)
     client.data.username = username;
     client.data.room = room;
-    // این کلاینت فقط پیام‌های همین اتاق را می‌گیرد
+    // اگر اتاق وجود نداشته باشد، join آن را می‌سازد؛ اگر باشد، کاربر وارد همان می‌شود
     await client.join(room);
 
     client.to(room).emit('chat', {

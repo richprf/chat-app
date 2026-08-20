@@ -20,11 +20,9 @@ type ChatMessage = {
   system?: boolean;
 };
 
-const PRESET_ROOMS = ['عمومی', 'تصادفی', 'کمک'];
-
 export default function Home() {
   const [nameDraft, setNameDraft] = useState('');
-  const [roomDraft, setRoomDraft] = useState('عمومی');
+  const [roomDraft, setRoomDraft] = useState('');
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -159,7 +157,6 @@ export default function Home() {
             </label>
             <input
               placeholder="اتاق"
-              list="rooms"
               value={roomDraft}
               onChange={(event) => setRoomDraft(event.target.value)}
               onKeyDown={(event) => {
@@ -169,11 +166,6 @@ export default function Home() {
               }}
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-slate-900 outline-none transition focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100"
             />
-            <datalist id="rooms">
-              {PRESET_ROOMS.map((name) => (
-                <option key={name} value={name} />
-              ))}
-            </datalist>
           </div>
           <button
             onClick={join}
