@@ -1,0 +1,22 @@
+{
+  "name": "chat-backend",
+  "private": true,
+  "scripts": {
+    "start": "nest start --watch"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.3",
+    "@nestjs/core": "^11.1.3",
+    "@nestjs/platform-express": "^11.1.3",
+    "@nestjs/platform-socket.io": "^11.1.3",
+    "@nestjs/websockets": "^11.1.3",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.7",
+    "@types/node": "^22.15.29",
+    "typescript": "^5.8.3"
+  }
+}
